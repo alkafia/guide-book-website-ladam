@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="data:," />
+  <title>Panduan Penggunaan Website LADAM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,600;7..72,700&family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --paper: #f7faf7;
+      --surface: #ffffff;
+      --surface-2: #eef5f0;
+      --ink: #173128;
+      --muted: #52675f;
+      --line: #d8e4dc;
+      --green: #117657;
+      --green-deep: #0b5540;
+      --green-soft: #d8f2e6;
+      --orange: #e66c32;
+      --orange-soft: #ffe3d3;
+      --yellow: #f2ba45;
+      --blue: #367b9b;
+      --blue-soft: #dceff6;
+      --shadow: 0 18px 50px rgba(22, 68, 51, .10);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --radius-sm: 11px;
+      --font-body: "Nunito Sans", sans-serif;
+      --font-display: "Literata", serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper: #0f1916;
+        --surface: #16241f;
+        --surface-2: #1d3029;
+        --ink: #edf8f2;
+        --muted: #b5c7bf;
+        --line: #2e463d;
+        --green: #65d3a7;
+        --green-deep: #9ce5c7;
+        --green-soft: #173d31;
+        --orange: #ff9864;
+        --orange-soft: #45291f;
+        --yellow: #f3c866;
+        --blue: #76bfdc;
+        --blue-soft: #173743;
+        --shadow: 0 20px 55px rgba(0, 0, 0, .28);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 15% 3%, color-mix(in srgb, var(--green-soft) 80%, transparent) 0 210px, transparent 211px),
+        linear-gradient(var(--paper), var(--paper));
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.65;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      z-index: 100;
+      inset: 0 auto auto 0;
+      width: var(--read, 0%);
+      height: 4px;
+      background: linear-gradient(90deg, var(--orange), var(--yellow), var(--green));
+    }
+    a { color: inherit; }
+    button, summary { font: inherit; }
+    svg { display: block; }
+    .icon { width: 1.35rem; height: 1.35rem; stroke: currentColor; fill: none; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; flex: 0 0 auto; }
+
+    .shell {
+      width: min(1220px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 80px;
+    }
+    .cover {
+      position: relative;
+      overflow: hidden;
+      min-height: 540px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr);
+      background: var(--green-deep);
+      color: #fff;
+      border-radius: 34px;
+      box-shadow: var(--shadow);
+      isolation: isolate;
+    }
+    .cover::before,
+    .cover::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      border: 42px solid rgba(255,255,255,.08);
+      z-index: -1;
+    }
+    .cover::before { width: 330px; height: 330px; right: -120px; top: -130px; }
+    .cover::after { width: 210px; height: 210px; left: 42%; bottom: -170px; }
+    .cover-copy { padding: clamp(34px, 6vw, 76px); align-self: center; }
+    .edition {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 13px;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: .82rem;
+      letter-spacing: .03em;
+    }
+    h1, h2, h3 { font-family: var(--font-display); margin-top: 0; line-height: 1.16; }
+    h1 { font-size: clamp(2.55rem, 6vw, 5.35rem); max-width: 820px; margin: 26px 0 20px; letter-spacing: -.045em; }
+    .cover-lead { font-size: clamp(1.05rem, 2vw, 1.35rem); max-width: 660px; color: rgba(255,255,255,.86); }
+    .cover-meta { margin-top: 34px; display: flex; gap: 11px; flex-wrap: wrap; }
+    .cover-meta span { padding: 8px 12px; border-radius: 10px; background: rgba(255,255,255,.11); font-weight: 700; font-size: .9rem; }
+    .cover-actions { display: flex; gap: 12px; align-items: center; margin-top: 34px; flex-wrap: wrap; }
+    .primary-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      text-decoration: none;
+      background: var(--yellow);
+      color: #24321d;
+      padding: 12px 17px;
+      border-radius: 12px;
+      font-weight: 900;
+      box-shadow: 0 8px 0 rgba(0,0,0,.14);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .primary-link:hover { transform: translateY(-2px); box-shadow: 0 10px 0 rgba(0,0,0,.14); }
+    .primary-link:focus-visible, .toc a:focus-visible, summary:focus-visible, .backtop:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+    .cover-note { font-size: .88rem; color: rgba(255,255,255,.75); }
+    .cover-art {
+      position: relative;
+      min-height: 360px;
+      background: color-mix(in srgb, var(--orange) 88%, #8e3c20);
+      display: grid;
+      place-items: center;
+      clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%);
+      padding: 44px 30px 44px 65px;
+    }
+    .cover-logo { width: min(330px, 92%); height: auto; object-fit: contain; filter: drop-shadow(0 22px 20px rgba(53, 29, 18, .22)); }
+    .author-strip {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: end;
+      padding: 20px clamp(24px, 4vw, 44px);
+      border: 1px solid var(--line);
+      border-top: 0;
+      border-radius: 0 0 26px 26px;
+      background: var(--surface);
+    }
+    .author-strip strong { display: block; font-size: 1.05rem; }
+    .author-strip span { color: var(--muted); font-size: .92rem; }
+    .doc-code { text-align: right; }
+
+    .page-grid {
+      display: grid;
+      grid-template-columns: 270px minmax(0, 1fr);
+      gap: 34px;
+      margin-top: 44px;
+      align-items: start;
+    }
+    .toc {
+      position: sticky;
+      top: 22px;
+      border: 1px solid var(--line);
+      background: color-mix(in srgb, var(--surface) 94%, transparent);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      box-shadow: 0 12px 32px rgba(22, 68, 51, .06);
+    }
+    .toc-title { display: flex; align-items: center; gap: 9px; font-weight: 900; margin-bottom: 10px; }
+    .toc ol { list-style: none; padding: 0; margin: 0; counter-reset: nav; }
+    .toc li { counter-increment: nav; }
+    .toc a {
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 7px;
+      align-items: center;
+      text-decoration: none;
+      padding: 8px 7px;
+      border-radius: 9px;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: .91rem;
+    }
+    .toc a::before { content: counter(nav, decimal-leading-zero); font-size: .71rem; font-weight: 900; color: var(--orange); }
+    .toc a:hover, .toc a.active { background: var(--green-soft); color: var(--ink); }
+    .toc .small-link { margin-top: 13px; border-top: 1px solid var(--line); padding-top: 13px; }
+    .toc-mobile { display: none; }
+
+    .content { min-width: 0; }
+    .section { scroll-margin-top: 24px; padding: 12px 0 54px; }
+    .chapter-heading { display: grid; grid-template-columns: auto minmax(0,1fr); gap: 16px; align-items: start; margin-bottom: 24px; }
+    .chapter-number {
+      width: 46px; height: 46px; display: grid; place-items: center;
+      background: var(--green); color: var(--paper); border-radius: 13px 13px 13px 4px;
+      font-weight: 900;
+    }
+    .chapter-heading h2 { font-size: clamp(1.7rem, 3vw, 2.65rem); margin: 0 0 6px; letter-spacing: -.025em; }
+    .chapter-heading p { margin: 0; color: var(--muted); max-width: 750px; }
+    .section-rule { border: 0; border-top: 1px solid var(--line); margin: 0 0 54px; }
+
+    .identity-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      border-top: 2px solid var(--ink);
+    }
+    .identity-row { padding: 16px 8px; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 145px 1fr; gap: 14px; }
+    .identity-row:nth-child(odd) { padding-right: 24px; }
+    .identity-row:nth-child(even) { padding-left: 24px; border-left: 1px solid var(--line); }
+    .identity-row dt { color: var(--muted); font-weight: 700; }
+    .identity-row dd { margin: 0; font-weight: 800; }
+
+    .outcomes {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      counter-reset: outcome;
+    }
+    .outcome {
+      counter-increment: outcome;
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 14px;
+      padding: 20px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+    }
+    .outcome::before {
+      content: counter(outcome);
+      width: 38px; height: 38px; display: grid; place-items: center;
+      border-radius: 50%; background: var(--orange-soft); color: var(--orange); font-weight: 900;
+    }
+    .outcome strong { display: block; margin-bottom: 3px; }
+    .outcome p { margin: 0; color: var(--muted); }
+    .profile-band { margin-top: 20px; padding: 18px 20px; background: var(--blue-soft); border-radius: 8px 22px 22px 22px; }
+    .profile-band strong { color: var(--blue); }
+
+    .intro-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+    .intro-copy { padding: clamp(22px, 3vw, 32px); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg) 10px var(--radius-lg) var(--radius-lg); }
+    .intro-copy p { margin: 0 0 15px; }
+    .intro-copy p:last-child { margin: 0; }
+    .principles { display: grid; gap: 11px; }
+    .principle { display: flex; gap: 13px; padding: 17px; background: var(--surface-2); border-radius: var(--radius-sm); align-items: flex-start; }
+    .principle-icon { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; color: var(--green); background: var(--surface); flex: 0 0 auto; }
+    .principle strong { display: block; }
+    .principle span { color: var(--muted); font-size: .92rem; }
+
+    .prep-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .prep-card { padding: 18px; border-top: 4px solid var(--green); background: var(--surface); box-shadow: 0 8px 24px rgba(22, 68, 51, .06); }
+    .prep-card:nth-child(2) { border-color: var(--orange); }
+    .prep-card:nth-child(3) { border-color: var(--blue); }
+    .prep-card:nth-child(4) { border-color: var(--yellow); }
+    .prep-card .icon { width: 1.65rem; height: 1.65rem; margin-bottom: 12px; color: var(--green); }
+    .prep-card:nth-child(2) .icon { color: var(--orange); }
+    .prep-card:nth-child(3) .icon { color: var(--blue); }
+    .prep-card:nth-child(4) .icon { color: #b07b0c; }
+    .prep-card strong { display: block; }
+    .prep-card span { color: var(--muted); font-size: .9rem; }
+
+    .steps { margin-top: 22px; display: grid; gap: 0; }
+    .step { display: grid; grid-template-columns: 54px minmax(0,1fr); gap: 18px; position: relative; padding-bottom: 24px; }
+    .step:not(:last-child)::before { content: ""; position: absolute; left: 26px; top: 50px; bottom: 1px; width: 2px; background: var(--line); }
+    .step-dot { width: 54px; height: 54px; border-radius: 18px 18px 18px 5px; background: var(--green-soft); color: var(--green); display: grid; place-items: center; z-index: 1; }
+    .step-body { padding: 5px 0 0; }
+    .step-body strong { font-size: 1.05rem; }
+    .step-body p { margin: 4px 0 0; color: var(--muted); }
+
+    .nav-key { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-top: 25px; }
+    .key { padding: 18px; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--surface); }
+    .key-icon { display: inline-grid; place-items: center; min-width: 42px; height: 34px; padding: 0 9px; border-radius: 9px; color: var(--green); background: var(--green-soft); font-weight: 900; margin-bottom: 11px; }
+    .key p { margin: 4px 0 0; color: var(--muted); font-size: .92rem; }
+    .tip {
+      margin-top: 18px;
+      display: flex;
+      gap: 13px;
+      padding: 16px 18px;
+      background: var(--orange-soft);
+      border-radius: 8px 20px 20px 20px;
+      color: var(--ink);
+    }
+    .tip .icon { color: var(--orange); margin-top: 2px; }
+
+    .journey-legend { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .legend { font-size: .82rem; font-weight: 800; padding: 6px 10px; border-radius: 999px; background: var(--surface-2); }
+    .legend.start { color: var(--green); background: var(--green-soft); }
+    .legend.explore { color: var(--blue); background: var(--blue-soft); }
+    .legend.assess { color: var(--orange); background: var(--orange-soft); }
+
+    .phase { margin: 30px 0 14px; display: flex; align-items: center; gap: 12px; }
+    .phase::after { content: ""; height: 1px; background: var(--line); flex: 1; }
+    .phase span { font-weight: 900; color: var(--muted); font-size: .86rem; letter-spacing: .03em; }
+    .page-cards { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
+    .page-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; }
+    .page-card summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 42px 1fr auto; gap: 13px; align-items: center; padding: 17px; }
+    .page-card summary::-webkit-details-marker { display: none; }
+    .page-card summary::after { content: "+"; width: 29px; height: 29px; display: grid; place-items: center; border-radius: 50%; background: var(--surface-2); color: var(--green); font-weight: 900; }
+    .page-card[open] summary::after { content: "−"; }
+    .page-card[open] summary { border-bottom: 1px solid var(--line); }
+    .page-num { width: 42px; height: 42px; border-radius: 12px 12px 12px 4px; display: grid; place-items: center; background: var(--green-soft); color: var(--green); font-weight: 900; }
+    .page-title strong { display: block; }
+    .page-title span { font-size: .82rem; color: var(--muted); }
+    .page-detail { padding: 17px; }
+    .page-detail p { margin: 0 0 12px; color: var(--muted); }
+    .page-detail h4 { margin: 0 0 5px; color: var(--ink); }
+    .page-detail ul, .page-detail ol { margin: 7px 0 0; padding-left: 20px; }
+    .page-detail li + li { margin-top: 5px; }
+    .page-card.featured { grid-column: 1 / -1; }
+    .page-card.featured .page-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+    .guide-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .audience { padding: 22px; border-radius: var(--radius-md); background: var(--surface); border: 1px solid var(--line); }
+    .audience:nth-child(1) { border-top: 5px solid var(--yellow); }
+    .audience:nth-child(2) { border-top: 5px solid var(--green); }
+    .audience:nth-child(3) { border-top: 5px solid var(--orange); }
+    .audience-head { display: flex; align-items: center; gap: 11px; margin-bottom: 13px; }
+    .audience-head .icon { color: var(--green); width: 1.65rem; height: 1.65rem; }
+    .audience h3 { margin: 0; font-family: var(--font-body); font-size: 1.15rem; }
+    .audience ol { padding-left: 19px; margin: 0; }
+    .audience li + li { margin-top: 8px; }
+
+    .faq { display: grid; gap: 10px; }
+    .faq details { border-bottom: 1px solid var(--line); }
+    .faq summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 30px 1fr auto; align-items: center; gap: 12px; padding: 16px 0; font-weight: 900; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::before { content: "?"; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; color: var(--orange); background: var(--orange-soft); }
+    .faq summary::after { content: "+"; color: var(--green); font-size: 1.3rem; }
+    .faq details[open] summary::after { content: "−"; }
+    .faq p { margin: 0; padding: 0 0 18px 42px; color: var(--muted); }
+
+    .closing {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) auto;
+      align-items: center;
+      gap: 28px;
+      padding: clamp(26px, 5vw, 48px);
+      background: var(--green-deep);
+      color: #fff;
+      border-radius: 12px 34px 34px 34px;
+      box-shadow: var(--shadow);
+    }
+    .closing h2 { font-size: clamp(1.75rem, 4vw, 3rem); margin-bottom: 10px; }
+    .closing p { margin: 0; color: rgba(255,255,255,.82); max-width: 730px; }
+    .closing .primary-link { white-space: nowrap; }
+    .signature { margin-top: 28px; display: flex; justify-content: space-between; gap: 20px; color: var(--muted); font-size: .9rem; }
+    .signature strong { color: var(--ink); }
+
+    @media (max-width: 940px) {
+      .cover { grid-template-columns: 1fr; }
+      .cover-art { clip-path: none; min-height: 310px; border-top: 1px solid rgba(255,255,255,.15); }
+      .page-grid { grid-template-columns: 1fr; margin-top: 28px; }
+      .toc { display: none; }
+      .toc-mobile { display: block; margin-bottom: 26px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+      .toc-mobile summary { cursor: pointer; font-weight: 900; padding: 14px 16px; list-style: none; display: flex; gap: 9px; align-items: center; }
+      .toc-mobile summary::-webkit-details-marker { display: none; }
+      .toc-mobile nav { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 5px; padding: 0 12px 12px; }
+      .toc-mobile a { text-decoration: none; padding: 9px; border-radius: 8px; background: var(--surface-2); font-size: .9rem; font-weight: 700; }
+      .prep-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .guide-tabs { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 650px) {
+      .shell { width: min(100% - 20px, 1220px); padding-top: 10px; }
+      .cover { min-height: 0; border-radius: 24px; }
+      .cover-copy { padding: 30px 23px 34px; }
+      h1 { font-size: clamp(2.3rem, 13vw, 3.65rem); }
+      .cover-art { min-height: 250px; padding: 30px; }
+      .author-strip { align-items: start; flex-direction: column; padding: 18px 20px; }
+      .doc-code { text-align: left; }
+      .identity-grid, .outcomes, .intro-panel, .page-cards, .nav-key { grid-template-columns: 1fr; }
+      .identity-row:nth-child(odd), .identity-row:nth-child(even) { padding: 14px 3px; border-left: 0; }
+      .identity-row { grid-template-columns: 118px 1fr; }
+      .prep-grid { grid-template-columns: 1fr 1fr; }
+      .page-card.featured { grid-column: auto; }
+      .page-card.featured .page-detail { grid-template-columns: 1fr; gap: 12px; }
+      .closing { grid-template-columns: 1fr; }
+      .signature { flex-direction: column; }
+      .toc-mobile nav { grid-template-columns: 1fr; }
+      .section { padding-bottom: 42px; }
+      .section-rule { margin-bottom: 42px; }
+    }
+
+    @media (max-width: 390px) {
+      .prep-grid { grid-template-columns: 1fr; }
+      .identity-row { grid-template-columns: 1fr; gap: 3px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M14 7l5 5-5 5"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-device" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="13" rx="2"/><path d="M8 21h8M12 16v5"/></symbol>
+    <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M12 20h.01M2 9a14.5 14.5 0 0 1 20 0"/></symbol>
+    <symbol id="i-audio" viewBox="0 0 24 24"><path d="M5 10v4h4l5 4V6L9 10zM17 9a4 4 0 0 1 0 6M19.5 6.5a8 8 0 0 1 0 11"/></symbol>
+    <symbol id="i-pencil" viewBox="0 0 24 24"><path d="m4 20 4.5-1 10-10-3.5-3.5-10 10zM13.5 7l3.5 3.5"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7.1l3-3a4 4 0 0 0-5.6-5.7l-1.7 1.7M14 10a4 4 0 0 0-5.7-.1l-3 3a4 4 0 0 0 5.6 5.7l1.7-1.7"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4z"/></symbol>
+    <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4a2 2 0 0 0 1.8-3l-5-9V3M8 15h8"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M5 20h14"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 21V9m-4 4 4-4 4 4M5 4h14"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 5.8a5.5 5.5 0 0 0-7.8 0L12 6.8l-1-1a5.5 5.5 0 0 0-7.8 7.8L12 22l8.8-8.4a5.5 5.5 0 0 0 0-7.8z"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></symbol>
+    <symbol id="i-school" viewBox="0 0 24 24"><path d="m3 10 9-6 9 6M5 9v11h14V9M9 20v-6h6v6M8 11h.01M16 11h.01"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M8.2 14.5A7 7 0 1 1 15.8 14.5c-.8.7-.8 1.5-.8 2.5H9c0-1 0-1.8-.8-2.5z"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></symbol>
+  </svg>
+
+  <main class="shell">
+    <section class="cover" aria-labelledby="cover-title">
+      <div class="cover-copy">
+        <span class="edition"><svg class="icon"><use href="#i-book"/></svg> Edisi penggunaan digital · 2026</span>
+        <h1 id="cover-title">Panduan Penggunaan Website LADAM</h1>
+        <p class="cover-lead">Petunjuk lengkap untuk menjelajahi <strong>Laman Digital Anak: Dunia Ajaib Magnet</strong> sebagai bahan ajar interaktif IPAS Kelas IV SD.</p>
+        <div class="cover-meta" aria-label="Pengguna panduan">
+          <span>Untuk Peserta Didik</span><span>Guru</span><span>Orang Tua</span>
+        </div>
+        <div class="cover-actions">
+          <a class="primary-link" href="https://web-ladam.shipstatic.com/" target="_blank" rel="noopener noreferrer">Buka Website LADAM <svg class="icon"><use href="#i-arrow"/></svg></a>
+          <span class="cover-note">Tautan terbuka di tab baru</span>
+        </div>
+      </div>
+      <div class="cover-art">
+        <img class="cover-logo" src="data:image/webp;base64,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" alt="Logo LADAM, Laman Digital Anak: Dunia Ajaib Magnet">
+      </div>
+    </section>
+
+    <div class="author-strip">
+      <div><span>Disusun oleh</span><strong>Rizki Alkafia Oktavrianto</strong></div>
+      <div class="doc-code"><strong>PPG PGSD B · FKIP</strong><span>Universitas Muhammadiyah Purwokerto</span></div>
+    </div>
+
+    <div class="page-grid">
+      <aside class="toc" aria-label="Daftar isi">
+        <div class="toc-title"><svg class="icon"><use href="#i-book"/></svg> Daftar Isi</div>
+        <ol>
+          <li><a href="#identitas">Identitas Bahan Ajar</a></li>
+          <li><a href="#capaian">Capaian & Tujuan</a></li>
+          <li><a href="#tentang">Tentang LADAM</a></li>
+          <li><a href="#akses">Persiapan & Akses</a></li>
+          <li><a href="#navigasi">Cara Bernavigasi</a></li>
+          <li><a href="#komponen">Komponen LADAM</a></li>
+          <li><a href="#pendampingan">Panduan Pendampingan</a></li>
+          <li><a href="#bantuan">Pemecahan Masalah</a></li>
+        </ol>
+        <div class="small-link"><a href="https://web-ladam.shipstatic.com/" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-link"/></svg> Buka LADAM</a></div>
+      </aside>
+
+      <div class="content">
+        <details class="toc-mobile">
+          <summary><svg class="icon"><use href="#i-menu"/></svg> Buka daftar isi</summary>
+          <nav aria-label="Daftar isi seluler">
+            <a href="#identitas">Identitas Bahan Ajar</a><a href="#capaian">Capaian & Tujuan</a><a href="#tentang">Tentang LADAM</a><a href="#akses">Persiapan & Akses</a><a href="#navigasi">Cara Bernavigasi</a><a href="#komponen">Komponen LADAM</a><a href="#pendampingan">Panduan Pendampingan</a><a href="#bantuan">Pemecahan Masalah</a>
+          </nav>
+        </details>
+
+        <section class="section" id="identitas">
+          <header class="chapter-heading"><span class="chapter-number">01</span><div><h2>Identitas Bahan Ajar</h2><p>Informasi dasar yang membantu guru dan pendamping memahami sasaran, materi, serta bentuk LADAM sebelum digunakan.</p></div></header>
+          <dl class="identity-grid">
+            <div class="identity-row"><dt>Jenjang/Kelas</dt><dd>SD / Kelas IV</dd></div>
+            <div class="identity-row"><dt>Mata Pelajaran</dt><dd>Ilmu Pengetahuan Alam dan Sosial (IPAS)</dd></div>
+            <div class="identity-row"><dt>Materi Pokok</dt><dd>Menyelidiki Gaya Magnet</dd></div>
+            <div class="identity-row"><dt>Submateri</dt><dd>Pengertian, sifat, bentuk, dan manfaat magnet</dd></div>
+            <div class="identity-row"><dt>Nama Bahan Ajar</dt><dd>LADAM — Laman Digital Anak: Dunia Ajaib Magnet</dd></div>
+            <div class="identity-row"><dt>Jenis Bahan Ajar</dt><dd>Website interaktif multimodal</dd></div>
+            <div class="identity-row"><dt>Pendekatan</dt><dd>DUP dan Pembelajaran Mendalam</dd></div>
+            <div class="identity-row"><dt>Alamat Akses</dt><dd>web-ladam.shipstatic.com</dd></div>
+          </dl>
+        </section>
+        <hr class="section-rule">
+
+        <section class="section" id="capaian">
+          <header class="chapter-heading"><span class="chapter-number">02</span><div><h2>Capaian dan Tujuan Pembelajaran</h2><p>Setelah mengikuti rangkaian belajar melalui LADAM, peserta didik diharapkan mampu mencapai enam kemampuan berikut.</p></div></header>
+          <div class="outcomes">
+            <article class="outcome"><div><strong>Memahami konsep dasar</strong><p>Menjelaskan gaya magnet sebagai gaya tak sentuh yang bekerja pada benda tertentu.</p></div></article>
+            <article class="outcome"><div><strong>Menganalisis sifat magnet</strong><p>Membedakan kutub sejenis dan berbeda serta menjelaskan tarik-menarik dan tolak-menolak.</p></div></article>
+            <article class="outcome"><div><strong>Mengenali bentuk magnet</strong><p>Mengidentifikasi magnet batang, ladam, silinder, jarum, dan cincin.</p></div></article>
+            <article class="outcome"><div><strong>Menghubungkan manfaat</strong><p>Menjelaskan penggunaan magnet pada kompas, peralatan rumah tangga, dinamo, dan teknologi.</p></div></article>
+            <article class="outcome"><div><strong>Melakukan penyelidikan</strong><p>Membuat prediksi, menguji benda, mengamati hasil, dan mencatat data secara jujur.</p></div></article>
+            <article class="outcome"><div><strong>Mengomunikasikan temuan</strong><p>Menyampaikan kesimpulan, karya, dan refleksi belajar dengan bahasa yang runtut.</p></div></article>
+          </div>
+          <div class="profile-band"><strong>Dimensi yang dikuatkan:</strong> penalaran kritis, kolaborasi dan kepedulian, kreativitas, serta kemandirian.</div>
+        </section>
+        <hr class="section-rule">
+
+        <section class="section" id="tentang">
+          <header class="chapter-heading"><span class="chapter-number">03</span><div><h2>Penjelasan tentang LADAM</h2><p>Lebih dari kumpulan materi, LADAM menyusun pengalaman belajar menjadi petualangan yang dapat dilihat, didengar, dicoba, dan direfleksikan.</p></div></header>
+          <div class="intro-panel">
+            <div class="intro-copy">
+              <p><strong>LADAM</strong> adalah singkatan dari <em>Laman Digital Anak: Dunia Ajaib Magnet</em>. Bahan ajar ini dirancang untuk membantu peserta didik kelas IV mempelajari gaya magnet melalui teks bergambar, video, audio, simulasi, eksperimen nyata, kuis, evaluasi, dan refleksi.</p>
+              <p>Rangkaian halaman bergerak dari pengenalan menuju penyelidikan. Peserta didik tidak hanya membaca konsep, tetapi juga membuat prediksi, mencoba, membandingkan hasil, lalu menyimpulkan temuannya.</p>
+            </div>
+            <div class="principles">
+              <div class="principle"><span class="principle-icon"><svg class="icon"><use href="#i-play"/></svg></span><div><strong>Beragam cara menerima informasi</strong><span>Materi tersedia melalui video, bacaan, gambar, dan audio.</span></div></div>
+              <div class="principle"><span class="principle-icon"><svg class="icon"><use href="#i-flask"/></svg></span><div><strong>Belajar melalui pengalaman</strong><span>Konsep diuji lewat simulasi digital dan eksperimen benda nyata.</span></div></div>
+              <div class="principle"><span class="principle-icon"><svg class="icon"><use href="#i-star"/></svg></span><div><strong>Pemahaman yang bermakna</strong><span>Peserta didik menghubungkan magnet dengan kehidupan sehari-hari.</span></div></div>
+            </div>
+          </div>
+        </section>
+        <hr class="section-rule">
+
+        <section class="section" id="akses">
+          <header class="chapter-heading"><span class="chapter-number">04</span><div><h2>Persiapan dan Cara Mengakses</h2><p>Pastikan perangkat dan koneksi siap agar video, audio, simulasi, kuis, dan tautan eksternal dapat digunakan dengan lancar.</p></div></header>
+          <div class="prep-grid">
+            <div class="prep-card"><svg class="icon"><use href="#i-device"/></svg><strong>Perangkat</strong><span>Gunakan ponsel, tablet, laptop, atau komputer.</span></div>
+            <div class="prep-card"><svg class="icon"><use href="#i-wifi"/></svg><strong>Internet</strong><span>Diperlukan untuk memuat LADAM dan layanan eksternal.</span></div>
+            <div class="prep-card"><svg class="icon"><use href="#i-audio"/></svg><strong>Suara</strong><span>Aktifkan speaker atau gunakan headphone untuk materi audio.</span></div>
+            <div class="prep-card"><svg class="icon"><use href="#i-pencil"/></svg><strong>Alat Belajar</strong><span>Siapkan alat tulis dan bahan eksperimen saat diminta.</span></div>
+          </div>
+          <div class="steps" aria-label="Langkah mengakses LADAM">
+            <div class="step"><span class="step-dot"><svg class="icon"><use href="#i-link"/></svg></span><div class="step-body"><strong>1. Buka alamat website</strong><p>Ketik <b>https://web-ladam.shipstatic.com/</b> pada bilah alamat browser.</p></div></div>
+            <div class="step"><span class="step-dot"><svg class="icon"><use href="#i-play"/></svg></span><div class="step-body"><strong>2. Mulai dari Beranda</strong><p>Tekan tombol <b>MULAI MENGEKSPLORASI!</b> untuk masuk ke halaman Pengantar.</p></div></div>
+            <div class="step"><span class="step-dot"><svg class="icon"><use href="#i-arrow"/></svg></span><div class="step-body"><strong>3. Ikuti urutan belajar</strong><p>Gunakan tombol <b>LANJUT</b> dan <b>KEMBALI</b>, atau pilih halaman melalui Menu Petualangan.</p></div></div>
+            <div class="step"><span class="step-dot"><svg class="icon"><use href="#i-check"/></svg></span><div class="step-body"><strong>4. Selesaikan sampai refleksi</strong><p>Ikuti penyelidikan, berbagi karya, kuis, evaluasi, dan refleksi sebelum menuju Penutup.</p></div></div>
+          </div>
+        </section>
+        <hr class="section-rule">
+
+        <section class="section" id="navigasi">
+          <header class="chapter-heading"><span class="chapter-number">05</span><div><h2>Cara Bernavigasi</h2><p>Tiga kendali berikut menjadi kunci untuk berpindah halaman tanpa kehilangan alur belajar.</p></div></header>
+          <div class="nav-key">
+            <div class="key"><span class="key-icon">☰</span><strong>Menu Petualangan</strong><p>Tekan ikon garis tiga di kiri atas, lalu pilih satu dari 15 halaman.</p></div>
+            <div class="key"><span class="key-icon">←</span><strong>KEMBALI</strong><p>Mundur satu halaman sesuai urutan perjalanan belajar.</p></div>
+            <div class="key"><span class="key-icon">→</span><strong>LANJUT</strong><p>Maju ke halaman berikutnya. Gunakan menu jika tombol tidak tersedia.</p></div>
+          </div>
+          <div class="tip"><svg class="icon"><use href="#i-bulb"/></svg><div><strong>Perhatikan tab baru.</strong> Video, PhET, Google Drive, kuis Zep, Google Form, dan Mentimeter dapat terbuka di tab lain. Setelah selesai, tutup tab tersebut atau pilih kembali tab LADAM.</div></div>
+        </section>
+        <hr class="section-rule">
+
+        <section class="section" id="komponen">
+          <header class="chapter-heading"><span class="chapter-number">06</span><div><h2>Komponen dan Isi LADAM</h2><p>Tekan setiap kartu untuk membuka petunjuk. Ikuti urutan 1–15 agar pengalaman belajar tetap utuh.</p></div></header>
+          <div class="journey-legend"><span class="legend start">Mulai</span><span class="legend explore">Eksplorasi</span><span class="legend assess">Uji & refleksi</span></div>
+
+          <div class="phase"><span>FASE 1 · MULAI PETUALANGAN</span></div>
+          <div class="page-cards">
+            <details class="page-card"><summary><span class="page-num">01</span><span class="page-title"><strong>Beranda</strong><span>Pintu masuk LADAM</span></span></summary><div class="page-detail"><h4>Yang ditemukan</h4><p>Sampul digital, identitas bahan ajar, nama penyusun, dan tombol mulai.</p><h4>Cara menggunakan</h4><p>Tekan <b>MULAI MENGEKSPLORASI!</b> untuk membuka Pengantar.</p></div></details>
+            <details class="page-card"><summary><span class="page-num">02</span><span class="page-title"><strong>Pengantar</strong><span>Mengenal misi belajar</span></span></summary><div class="page-detail"><h4>Yang ditemukan</h4><p>Tiga misi utama: mengenali magnet, memahami sifatnya, dan menemukan manfaatnya.</p><h4>Cara menggunakan</h4><p>Baca sapaan, kenali misi, lalu tekan <b>MULAI</b>.</p></div></details>
+            <details class="page-card"><summary><span class="page-num">03</span><span class="page-title"><strong>Tujuan</strong><span>Arah dan capaian belajar</span></span></summary><div class="page-detail"><p>Halaman ini merupakan halaman yang menunjukan sebuah deskripsi tujuan belajar, dan dimensi profil lulusan yang diharapkan. Saat penggunaan di kelas atau bersama orang tua, dekskripsi tujuan dapat dibuat menjadi lebih sederhana agar murid lebih mudah memahaminya.</p></div></details>
+          </div>
+
+          <div class="phase"><span>FASE 2 · SIAPKAN DAN PAHAMI KONSEP</span></div>
+          <div class="page-cards">
+            <details class="page-card"><summary><span class="page-num">04</span><span class="page-title"><strong>Ayo Bersiap</strong><span>Video, infografis, dan pemantik</span></span></summary><div class="page-detail"><p>Halaman ini merupakan halaman apersepsi. Murid disediakan berbagai pilihan apersepsi sesuai minatnya. Mulai dari video, infografis, maupun melalui audio. Terdapat juga pertanyaan pemantik untuk membuka pemahaman awal murid.</p></div></details>
+            <details class="page-card"><summary><span class="page-num">05</span><span class="page-title"><strong>Menjelajah</strong><span>Pilih cara belajar</span></span></summary><div class="page-detail"><p>Halaman menjelajah merupakan halaman untuk murid memilih cara belajarnya. Disediakan 3 ruang belajar yaitu melalui video, mendengarkan audio, dan juga teks materi. Murid hanya perlu menekan salah satu tombol untuk menggunakannya.</p></div></details>
+            <details class="page-card featured"><summary><span class="page-num">06</span><span class="page-title"><strong>Materi</strong><span>Inti pengetahuan tentang magnet</span></span></summary><div class="page-detail"><p>Materi merupakan sebuah halaman tindak lanjut dari pilihan halaman "Menjejalah". Halaman materi ini berisi sebuah deskipsi materi yang lengkap mulai dari pengertian sampai manfaat magnet dalam kehidupan sehari-hari. Halaman ini tidak menampilkan tombol <b>LANJUT</b>, untuk menuju halaman selanjutnya tekan tombol kembali ke "halaman menyelidiki" barulah klik tombol lanjut.</p></div></details>
+          </div>
+
+          <div class="phase"><span>FASE 3 · LAKUKAN PENYELIDIKAN</span></div>
+          <div class="page-cards">
+            <details class="page-card featured"><summary><span class="page-num">07</span><span class="page-title"><strong>Menyelidiki</strong><span>Pilih misi digital atau nyata</span></span></summary><div class="page-detail"><p>Halaman menyelidiki merupakan ruang bagi murid memilih aktivitas penyelidikan yang sesuai minatnya. Terdapat 2 pilihan ruang aktivitas yaitu simulasi menggunakan laman PhET Simulation dan akitvitas detektif magnet.</p></div></details>
+            <details class="page-card featured"><summary><span class="page-num">08</span><span class="page-title"><strong>Detektif Magnet</strong><span>Eksperimen tujuh langkah</span></span></summary><div class="page-detail"><p>Bagian ini merupakan bentuk tindak lanjut dari pilihan aktivitas yang akan dilakukan sebelumnya. Halaman detektif magnet merupakan ruang petunjuk bagi murid melaksanakan aktivitas yang berhubungan dengan topik magnet. Terdapat rincian lengkap mulai dari deskripsi aktivitasnya, sampai dengan langkah-langkah yang harus dilakukan.</p></div></details>
+            <details class="page-card"><summary><span class="page-num">09</span><span class="page-title"><strong>Berbagi</strong><span>Unggah hasil karya</span></span></summary><div class="page-detail"><p>Halaman ini merupakan ruang untuk murid mengumpulkan hasil pengerjaanya dari aktivitas menjelajah. Terdapat 4 pilihan untuk murid mengumpulkan hasil temuannya yaitu dalam bentuk video, teks, infografis dan lain-lain. Pilihan yang disediakan memudahkan murid untuk mengumpulkan hasil temuannya sesuai minatnya.</p></div></details>
+          </div>
+
+          <div class="phase"><span>FASE 4 · SIMPULKAN, UJI, DAN REFLEKSI</span></div>
+          <div class="page-cards">
+            <details class="page-card"><summary><span class="page-num">10</span><span class="page-title"><strong>Menyimpulkan</strong><span>Ringkasan hasil belajar</span></span></summary><div class="page-detail"><p>Halaman ini merupakan sebuah kesimpulan yang telah ditemukan setelah murid melaksanakan penyelidikan. Mungkin terdapat perbedaan dengan hasil temuan murid namun tidak mempengaruhi hasil akhir belajarnya.</p></div></details>
+            <details class="page-card"><summary><span class="page-num">11</span><span class="page-title"><strong>Quiz</strong><span>Game tantangan Zep</span></span></summary><div class="page-detail"><p>Halaman ini merupakan ruang untuk murid memperkuat pengetahuannya terhadap materi melalui penggunaan game interaktif. Murid dapat menekan tombol <b>"START"</b> untuk mulai mengakses game quiz interaktif.</p></div></details>
+            <details class="page-card"><summary><span class="page-num">12</span><span class="page-title"><strong>Evaluasi</strong><span>Google Form · 15 soal</span></span></summary><div class="page-detail"><p>Bagian evaluasi merupakan sesi untuk mengukur tingkat pemahamanmu terhadap materi setelah menggunakan LADAM. Kamu akan diminta mengerjakan soal evaluasi yang terdiri dari soal pilihan ganda dan isian singkat. Kamu dapat menekan tombol "Mulai Mengerjakan" untuk mengakses soal evaluasinya. Perhatikan juga seluruh isi soal agar kamu mendapat hasil yang maksimal.</p></div></details>
+            <details class="page-card"><summary><span class="page-num">13</span><span class="page-title"><strong>Refleksi</strong><span>Ceritakan perasaan belajar</span></span></summary><div class="page-detail"><p>Bagian ini merupakan ruang untuk murid menyampaikan perasaannya setelah belajar melalui LADAM. Terdapat tombol menuju Mentimeter, kamu akan diminta untuk menuliskan satu kata atau frasa tentang perasaan selama belajar, lalu menekan tombol submit .</p></div></details>
+          </div>
+
+          <div class="phase"><span>FASE 5 · AKHIRI PETUALANGAN</span></div>
+          <div class="page-cards">
+            <details class="page-card"><summary><span class="page-num">14</span><span class="page-title"><strong>Penutup</strong><span>Apresiasi untuk ilmuwan cilik</span></span></summary><div class="page-detail"><p>Baca pesan penutup dan rayakan keberhasilan menyelesaikan petualangan belajar magnet.</p></div></details>
+            <details class="page-card"><summary><span class="page-num">15</span><span class="page-title"><strong>Penulis</strong><span>Profil pengembang LADAM</span></span></summary><div class="page-detail"><p>Halaman terakhir memuat identitas penyusun, program studi, fakultas, universitas, dan tahun pengembangan.</p></div></details>
+          </div>
+        </section>
+        <hr class="section-rule">
+
+        <section class="section" id="pendampingan">
+          <header class="chapter-heading"><span class="chapter-number">07</span><div><h2>Panduan Pendampingan</h2><p>Peran peserta didik, guru, dan orang tua saling melengkapi agar pembelajaran aman, terarah, dan tetap memberi ruang untuk menemukan.</p></div></header>
+          <div class="guide-tabs">
+            <article class="audience"><div class="audience-head"><svg class="icon"><use href="#i-user"/></svg><h3>Peserta Didik</h3></div><ol><li>Ikuti halaman secara berurutan.</li><li>Pilih cara belajar yang paling membantu.</li><li>Tulis prediksi sebelum menguji benda.</li><li>Catat hasil dengan jujur.</li><li>Tanyakan bagian yang belum dipahami.</li></ol></article>
+            <article class="audience"><div class="audience-head"><svg class="icon"><use href="#i-school"/></svg><h3>Guru</h3></div><ol><li>Sampaikan tujuan dengan bahasa peserta didik.</li><li>Periksa alat, koneksi, dan tautan sebelum kegiatan.</li><li>Bagi peran saat eksperimen.</li><li>Dampingi perpindahan ke tab eksternal.</li><li>Gunakan hasil kuis, evaluasi, dan refleksi sebagai umpan balik.</li></ol></article>
+            <article class="audience"><div class="audience-head"><svg class="icon"><use href="#i-users"/></svg><h3>Orang Tua</h3></div><ol><li>Dampingi anak saat membuka layanan eksternal.</li><li>Pastikan benda eksperimen aman.</li><li>Berikan pertanyaan pemandu, bukan jawaban langsung.</li><li>Bantu anak kembali ke tab LADAM.</li><li>Apresiasi proses dan kejujuran hasil.</li></ol></article>
+          </div>
+        </section>
+        <hr class="section-rule">
+
+        <section class="section" id="bantuan">
+          <header class="chapter-heading"><span class="chapter-number">08</span><div><h2>Pemecahan Masalah</h2><p>Jawaban cepat untuk kendala yang paling mungkin muncul saat menggunakan LADAM.</p></div></header>
+          <div class="faq">
+            <details><summary>Bagaimana melanjutkan dari halaman Materi?</summary><p>Buka ikon <b>☰ Menu Petualangan</b> di kiri atas, lalu pilih <b>Menyelidiki</b>. Halaman Materi memang tidak menampilkan tombol LANJUT.</p></details>
+            <details><summary>Mengapa saya keluar dari LADAM setelah menekan video atau simulasi?</summary><p>Anda tidak keluar. Tautan eksternal terbuka pada tab baru. Setelah selesai, tutup tab itu atau pilih kembali tab LADAM pada browser.</p></details>
+            <details><summary>Video, audio, atau kuis tidak dapat dimuat. Apa yang harus dilakukan?</summary><p>Periksa koneksi internet, muat ulang halaman, pastikan suara perangkat aktif, lalu coba kembali. Jika tetap gagal, lanjutkan dengan pilihan belajar lain yang tersedia.</p></details>
+            <details><summary>Mengapa saya tidak dapat mengunggah karya atau membuka LKPD?</summary><p>Google Drive dapat meminta akun Google atau izin akses. Gunakan akun yang diizinkan sekolah/keluarga, atau minta bantuan guru untuk menyiapkan salinan LKPD.</p></details>
+            <details><summary>Tombol kuis Zep berbahasa Inggris. Mana yang perlu dipilih?</summary><p>Pilih <b>START</b> untuk memulai dan <b>Show how to play</b> untuk melihat petunjuk permainan. Mintalah pendampingan guru bila ada instruksi lain yang belum dipahami.</p></details>
+            <details><summary>Apakah harus menyelesaikan semua pilihan video, bacaan, dan audio?</summary><p>Tidak selalu. Peserta didik dapat memilih cara yang paling membantu, tetapi boleh menggabungkan beberapa pilihan untuk memperkuat pemahaman.</p></details>
+          </div>
+        </section>
+
+        <section class="closing">
+          <div><h2>Siap memulai petualangan magnet?</h2><p>Mulailah dari Beranda, ikuti setiap misi secara berurutan, dan gunakan panduan ini kapan pun membutuhkan bantuan.</p></div>
+          <a class="primary-link" href="https://web-ladam.shipstatic.com/" target="_blank" rel="noopener noreferrer">Mulai di LADAM <svg class="icon"><use href="#i-arrow"/></svg></a>
+        </section>
+        <footer class="signature"><div><strong>Rizki Alkafia Oktavrianto</strong><br>PPG PGSD B · FKIP Universitas Muhammadiyah Purwokerto</div><div>Guide Book LADAM · 2026</div></footer>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var sections = Array.prototype.slice.call(document.querySelectorAll('.section[id]'));
+      var links = Array.prototype.slice.call(document.querySelectorAll('.toc a[href^="#"]'));
+      function updateProgress() {
+        var doc = document.documentElement;
+        var max = doc.scrollHeight - doc.clientHeight;
+        var pct = max > 0 ? (doc.scrollTop / max) * 100 : 0;
+        document.body.style.setProperty('--read', pct + '%');
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (link) {
+              link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+            });
+          }
+        });
+      }, { rootMargin: '-15% 0px -72% 0px', threshold: 0 });
+
+      sections.forEach(function (section) { observer.observe(section); });
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      updateProgress();
+
+      document.querySelectorAll('.toc-mobile a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          var details = link.closest('details');
+          if (details) details.open = false;
+        });
+      });
+    }());
+  </script>
+</body>
+</html>
